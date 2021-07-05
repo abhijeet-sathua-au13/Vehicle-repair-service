@@ -58,11 +58,12 @@ const MechanicSignup = () => {
 
       const mechanic = { email, name, phone, password }
 
-      fetch("https://service-anywhere.herokuapp.com/api/serviceman-signup", {
+      fetch(`${process.env.REACT_APP_API_URL}/api/serviceman-signup`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
-            credentials: 'same-origin',
+            credentials: 'include',
+            withCredentials: true,
             redirect: 'follow',
             referrerPolicy: 'no-referrer',
             headers: {

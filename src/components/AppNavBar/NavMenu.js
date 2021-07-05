@@ -41,17 +41,16 @@ const NavMenu = (props) => {
     handleMenuClose(e);
     console.log(isCustomerLoggedIn)
     if(isMechanicLoggedIn){
-      fetch('https://service-anywhere.herokuapp.com/api/serviceman-logout',{
-        method: 'get',
+      fetch(`${process.env.REACT_APP_API_URL}/api/serviceman-logout`,{
+        method: 'GET',
         credentials: 'include',
+        withCredentials: true,
         headers: {
           'Content-Type': 'application/json'
         }
       }).then(res => {
-        console.log(res);
         return res.json()
       }).then(resData => {
-        console.log(resData)
         dispatch(mechanicAuthActions.mechanicAuthLogout());
         history.push(PATHS.HOME)
         return
@@ -62,17 +61,16 @@ const NavMenu = (props) => {
     }
 
     if(isCustomerLoggedIn){
-      fetch('https://service-anywhere.herokuapp.com/api/customer-logout',{
-        method: 'get',
+      fetch(`${process.env.REACT_APP_API_URL}/api/customer-logout`,{
+        method: 'GET',
         credentials: 'include',
+        withCredentials: true,
         headers: {
           'Content-Type': 'application/json'
         }
       }).then(res => {
-        console.log(res)
         return res.json()
       }).then(resData => {
-        console.log(resData)
         dispatch(customerAuthActions.customerAuthLogout());
         history.push(PATHS.HOME)
         return

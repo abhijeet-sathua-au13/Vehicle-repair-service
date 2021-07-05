@@ -25,6 +25,15 @@ const DomainSlider = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     cssEase: "linear",
+
+    responsive: [{
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2
+      }
+    }]
   };
 
   const carServices = [lexus, landRover, bmw, audi, toyota]

@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import Rating from '@material-ui/lab/Rating';
 import { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -63,19 +64,49 @@ const UserChosenService = () => {
     const classes = useStyles();
 
     const [rating, setRating] = useState('');
+    const [serviceDesc, setServiceDesc] = useState('');
+    const [serviceName, setServiceName] = useState('');
+    const [serviceCost, setServiceCost] = useState('');
     const match = useRouteMatch();
 
     useEffect(() => {
-        const path = `https://service-anywhere.herokuapp.com/api/${match.params.mechanicId}/${match.params.serviceId}`
+        const path = `${process.env.REACT_APP_API_URL}/api/select-service/${match.params.mechanicId}/${match.params.serviceId}`
 
-        return fetch(path, {
+        fetch(path, {
             method: 'GET',
-            credentials: 'include'
-        }).then(res => res.json())
-            .then(resData => {
-                console.log(resData)
-            })
+            credentials: 'include',
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {
+            return res.json()
+        }).then((respData) => {
+            setServiceName(respData.data.name);
+            setServiceCost(respData.data.price);
+            setServiceDesc(respData.data.description)
+        }).catch((err) => {
+            console.log(err)
+        })
+},[match.params.mechanicId, match.params.serviceId])
+
+const submitRatingHandler = (event) => {
+    event.preventDefault();
+    fetch(`${process.env.REACT_APP_API_URL}/api/update-rating/${match.params.mechanicId}/${match.params.serviceId}/${rating}`, {
+        method: 'POST',
+        credentials: 'include',
+        withCredentials: true,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        return res.json();
+    }).then(resData => {
+        return
+    }).catch(err => {
+        console.log(err)
     })
+}
 
     return (
         <Container maxWidth={false} style={{padding: '1.2rem'}}>
@@ -85,14 +116,14 @@ const UserChosenService = () => {
                         <Grid item >
                             <Card className={classes.serviceName}>
                                 <Typography variant="h5">Service Name</Typography>
-                                <Typography className={classes.service}>Engine Oil Replacement</Typography>
+                                <Typography className={classes.service}>{serviceName}</Typography>
                             </Card>
                         </Grid>
                         <Grid item>
                             <Card className={classes.servicePrice}>
                                 <Typography variant="h5">Price</Typography>
                                 <Typography className={classes.price}>
-                                    &#8377; 600
+                                    &#8377; {serviceCost}
                                 </Typography>
                             </Card>
                         </Grid>
@@ -101,7 +132,7 @@ const UserChosenService = () => {
                 <Grid item xs={12} sm={8} >
                     <Card className={classes.serviceDescription}>
                         <Typography variant="h5">Service Description</Typography>
-                        <Typography className={classes.serviceDesc}>ujdkllksalkdhdsfgfhshfkhgsdhkjgfkjgfjkfjsfjgjfkkjfkjsakjfkjkakkkjf</Typography>                       
+                        <Typography className={classes.serviceDesc}>{serviceDesc}</Typography>                       
                     </Card>
  
                 </Grid>
@@ -118,6 +149,7 @@ const UserChosenService = () => {
                                 setRating(newValue);
                             }}
                         />
+                        <Button variant="contained" style={{textTransform: 'none', marginTop: '1.4em'}} onClick={submitRatingHandler}>Submit</Button>
                         </Card>
                     
                     </Grid>

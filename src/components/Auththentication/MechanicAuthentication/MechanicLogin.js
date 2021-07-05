@@ -45,9 +45,10 @@ const MechanicLogin = () => {
 
     useEffect(() => {
         if(isLoggedin && mechanicAuthLogin){
-            fetch(`https://service-anywhere.herokuapp.com/api/service-location-save/${longitude}/${latitude}`, {
+            fetch(`${process.env.REACT_APP_API_URL}/api/service-location-save/${longitude}/${latitude}`, {
                 method: 'POST',
                 credentials: 'include',
+                withCredentials: true,
                 headers: {
                     "Content-Type": "application/json; charset=UTF-8"
                 },
@@ -79,12 +80,13 @@ const MechanicLogin = () => {
 
         dispatch(loaderActions.start())
 
-        fetch('https://service-anywhere.herokuapp.com/api/serviceman-login', {
+        fetch(`${process.env.REACT_APP_API_URL}/api/serviceman-login`, {
             method: 'POST',
             body: JSON.stringify(mechanicData),
             credentials: 'include',
+            withCredentials: true,
             headers: {
-            'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
         }).then(response => {
             console.log(response)

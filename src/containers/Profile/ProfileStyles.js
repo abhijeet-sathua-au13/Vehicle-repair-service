@@ -76,8 +76,15 @@ uploadFileButton: {
 
 mechanicRating: {
     color: "#f0f0f0",
-}
+},
 
+table: {
+    border: "2px solid #383c45",
+    minWidth: 650,
+    "& .MuiTableCell-root ": {
+        borderBottom: "2px solid #1d1f22"
+      }
+  },
 
 }))
 

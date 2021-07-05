@@ -40,9 +40,10 @@ const MechanicProfile = () => {
 
     useEffect(() => {
         if(mechanicAuthLogin){
-            fetch('http://localhost:5001/api/serviceman-profile',{
-            method: 'GET',
-            credentials: 'include'
+            fetch(`${process.env.REACT_APP_API_URL}/api/serviceman-profile`,{
+                method: 'GET',
+                credentials: 'include',
+                withCredentials: true,
             })
             .then(res => {
                 return res.json()
@@ -60,15 +61,15 @@ const MechanicProfile = () => {
 
         const serviceList = {name, description, price}
 
-        fetch('http://localhost:5001/api/add-service', {
+        fetch(`${process.env.REACT_APP_API_URL}/api/add-service`, {
             method: 'POST',
             credentials: 'include',
+            withCredentials: true,
             headers: {
                 "Content-Type": "application/json; charset=UTF-8"
             },
             body: JSON.stringify(serviceList)
         }).then(response => {
-            console.log()
             return response.json()
         }).then(respData => {
             setServiceAdded(true)

@@ -21,6 +21,7 @@ import loaderActions from "../../../redux/actions/loaderActions/loaderActions";
 
 
 
+
 const Login = () => {
 
     const classes = useStyles();
@@ -60,12 +61,14 @@ const Login = () => {
 
       dispatch(loaderActions.start())
 
-      fetch('https://service-anywhere.herokuapp.com/api/customer-login', {
+      fetch(`${process.env.REACT_APP_API_URL}/api/customer-login`, {
         method: 'POST',
         body: JSON.stringify(customerData),
         credentials: 'include',
+        withCredentials: true,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          
         },
       }).then(resp => {
         return resp.json();

@@ -75,11 +75,12 @@ const Signup = () => {
 
       const user = { email, name, phone, password }
  
-      fetch("https://service-anywhere.herokuapp.com/api/customer-signup", {
+      fetch(`${process.env.REACT_APP_API_URL}/api/customer-signup`, {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
-        credentials: 'same-origin',
+        withCredentials: true,
+        credentials: 'include',
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
         headers: {

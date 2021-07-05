@@ -13,7 +13,7 @@ import Rating from '@material-ui/lab/Rating';
 import ReadOnlyProfileTable from "../../../components/ProfileDataTabel/ReadOnlyProfileTable";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import mechanicDetailsActions from "../../../redux/actions/mechaniDetailsActions/mechanicDetailsActions";
 import loaderActions from "../../../redux/actions/loaderActions/loaderActions";
 
@@ -23,6 +23,10 @@ const ViewMechanicProfile = () => {
     const classes = useStyles();
 
     const dispatch = useDispatch();
+
+    const [isListAvailable, setIsListAvailable] = useState(false);
+
+    
 
     const history = useHistory();
 
@@ -35,22 +39,22 @@ const ViewMechanicProfile = () => {
 
         dispatch(loaderActions.start())
 
-        const path = `https://service-anywhere.herokuapp.com/api/select-serviceman/${match.params.id}`;
+        const path = `${process.env.REACT_APP_API_URL}/api/select-serviceman/${match.params.id}`;
 
-            return fetch(path, {
+            fetch(path, {
                 method: 'GET',
-                credentials: 'include'
+                credentials: 'include',
+                withCredentials: true,
             })
                 .then(resp => resp.json())
                 .then(respData => {
-                    console.log(respData)
                     dispatch(mechanicDetailsActions.mechanicDetails(respData.data[0]))
                     dispatch(mechanicDetailsActions.mechanicServices(respData.data[0].serviceslist))
                     dispatch(loaderActions.stop())
                 }).catch(err => {
-                    console.log(err);
                     dispatch(loaderActions.stop())
                 })
+                setIsListAvailable(true);
     }, [match.params.id, dispatch])
 
     const showThisServiceDetails = (event, mechanicId, serviceId) => {
@@ -79,7 +83,7 @@ const ViewMechanicProfile = () => {
             </Grid>
             <Grid item xs={12} md={9} className={classes.profileData}>
                 <ReadOnlyProfileTable>
-                    {mechanicServicesDetails.map((service, index) => {
+                    {(mechanicServicesDetails && isListAvailable) ? mechanicServicesDetails.map((service, index) => {
                         return (
                             <TableRow className={classes.tableRow} key={index}>
                                 <TableCell component="th" scope="row" style={{color: "#a0a0a0"}}>
@@ -95,9 +99,8 @@ const ViewMechanicProfile = () => {
                                 </TableCell>
                             </TableRow>
                         )
-                    }) 
-                   
-}
+                    }) : null
+                }
                 </ReadOnlyProfileTable>
             </Grid>
         </Grid>

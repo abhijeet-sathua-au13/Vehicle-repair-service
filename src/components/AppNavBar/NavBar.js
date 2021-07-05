@@ -18,6 +18,7 @@ import logo from '../../assets/images/Group 26331.svg';
 // import Search from "../Search/Search";
 import { useHistory, useLocation } from "react-router-dom";
 import PATHS from "../../config/webPath";
+import { useSelector } from "react-redux";
 
 const withoutRoutes = ['/user/login', '/user/signup', '/mechanic/signup', '/mechanic/login']
 
@@ -30,6 +31,10 @@ export default function PrimarySearchAppBar(props) {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const history = useHistory();
+
+  const isCustomerLoggedIn = useSelector(state => state.customerLogin)
+
+  const isMechanicLoggedIn = useSelector(state => state.mechanicLogin)
 
   const {pathname} = useLocation();
 
@@ -89,11 +94,11 @@ export default function PrimarySearchAppBar(props) {
                   Contact Us
                 </Link>
               </Typography>
-              <Typography className={classes.links}>
+              {((isMechanicLoggedIn)||(isCustomerLoggedIn)) ? null : <Typography className={classes.links}>
                 <Link href="#" color="inherit" onClick={goToMechanicSection} style={{textDecoration: 'none'}}>
                   Repair with Us
                 </Link>
-              </Typography>
+              </Typography>}
             </div>
               <div className={classes.grow} />
             <div className={classes.sectionDesktop}>

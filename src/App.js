@@ -23,7 +23,7 @@ function App() {
       <Layout>
         <Switch>
             <Route exact path="/">
-              {(mechanicAuthLogin && !customerAuthLogin) ? <Redirect to={PATHS.MECHANIC_PROFILE} /> : <Home />}
+              {mechanicAuthLogin ? <Redirect to={PATHS.MECHANIC_PROFILE} /> : <Home />}
             </Route>
           {
             mechanicAuthLogin &&  

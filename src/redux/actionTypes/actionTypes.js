@@ -82,3 +82,7 @@ export const mechanicProfileDetailsTypes = {
 export const individualServiceDetailsTypes = {
     getServiceDetails: 'mechanic/SERVICE_DETAILS'
 }
+
+export const customerServiceHistory = {
+    getServiceHistory: 'customer/SERVICE_HISTORY'
+}

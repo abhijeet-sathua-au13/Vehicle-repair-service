@@ -20,21 +20,24 @@ const HomeStyles = makeStyles((theme) => ({
     padding: "1em",
   },
   landingSec: {
+    paddingRight: "0px",
     marginTop: theme.spacing(-5),
     [theme.breakpoints.down("xs")]: {
       marginTop: theme.spacing(5),
     },
-    minHeight: "70vh"
+    minHeight: "70vh",
+  
   },
   formGrid: {
     width: "rem",
     // minWidth: "20.6rem",
   },
   cardRoot: {
-    backgroundColor: "#4d5260",
+    backgroundColor: "transparent",
+    boxShadow: "none",
     color: "white",
     padding: theme.spacing(0),
-    maxWidth: '28em'
+    maxWidth: '30em'
   },
   imageSec: {
     backgroundImage: `url(${car})`,
@@ -106,7 +109,13 @@ const HomeStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2)
   },
   submitButton: {
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    backgroundColor: '#222630',
+    color: '#dedede',
+    fontSize: '1.3em',
+    "&:hover":{
+      color: '#222630'
+    }
   },
   sliderContainer: {
     backgroundColor: '#222630',

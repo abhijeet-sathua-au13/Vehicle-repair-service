@@ -12,6 +12,7 @@ import customerProfile from "./customerProfile";
 import nearByServiceProviders from "./nearByServiceProviders";
 import mechanicProfileDetails from "./mechanicProfileDetails";
 import serviceDetails from "./serviceDetails";
+import customerServices from "./customerServices";
 
 
 export default combineReducers({
@@ -27,6 +28,7 @@ export default combineReducers({
     customerProfile,
     nearByServiceProviders,
     mechanicProfileDetails,
-    serviceDetails
+    serviceDetails,
+    customerServices
     
 });
